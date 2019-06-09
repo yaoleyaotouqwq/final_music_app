@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Music1</string>
+    <string name="sequence_start">1</string>
+    <string name="music_title">Title</string>
+    <string name="music_artist">Artist name</string>
+    <string name="bottom_title">Title</string>
+    <string name="bottom_artist">Artist name</string>
+</resources>
