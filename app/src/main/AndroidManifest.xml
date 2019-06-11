@@ -20,7 +20,8 @@
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
+                <action android:name="com.example.music1.ACTION_MUSIC_START"/>
+                <action android:name="com.example.music1.ACTION_MUSIC_STOP"/>
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>

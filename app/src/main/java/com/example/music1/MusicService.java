@@ -8,9 +8,11 @@ import android.app.Service;
 import android.content.Intent;
 import android.media.MediaPlayer;
 import android.net.Uri;
+import android.os.Binder;
 import android.os.Build;
 import android.os.IBinder;
 import android.support.v4.app.NotificationCompat;
+import android.util.Log;
 import android.widget.Toast;
 
 import java.io.IOException;
@@ -22,6 +24,13 @@ public class MusicService extends Service {
     private static final String CHANNEL_ID = "Music channel";
     NotificationManager myNotificationManager;
 
+    private final IBinder myBinder = new MusicServiceBinder();
+
+    public class MusicServiceBinder extends Binder{
+        MusicService getService(){
+            return MusicService.this;
+        }
+    }
     public MusicService() {
     }
 
@@ -47,6 +56,9 @@ public class MusicService extends Service {
                 myMediaPlayer.setDataSource(getApplicationContext() , dataUri);
                 myMediaPlayer.prepare();
                 myMediaPlayer.start ();
+                Intent musicStartintent = new Intent(MainActivity.ACTION_MUSIC_START);
+                sendBroadcast(musicStartintent);
+
             } catch (IOException ex) {
                 ex.printStackTrace ();
             }
@@ -73,7 +85,45 @@ public class MusicService extends Service {
     @Override
     public IBinder onBind(Intent intent) {
         // TODO: Return the communication channel to the service.
-        throw new UnsupportedOperationException("Not yet implemented");
+        return myBinder;
     }
 
+    public void pause(){
+        if(myMediaPlayer != null && myMediaPlayer.isPlaying()){
+            myMediaPlayer.pause();
+        }
+    }
+
+    public void play(){
+        if(myMediaPlayer != null){
+            myMediaPlayer.start();
+        }
+    }
+
+    public int getDuration() {
+        int duration = 0;
+
+        if(myMediaPlayer != null){
+            duration = myMediaPlayer.getDuration();
+        }
+
+        return duration;
+    }
+
+    public int getCurrentPosition(){
+        int position = 0;
+        if(myMediaPlayer != null){
+            position = myMediaPlayer.getCurrentPosition();
+        }
+
+        return position;
+    }
+
+    public boolean isPlaying(){
+
+        if(myMediaPlayer != null){
+            return myMediaPlayer.isPlaying();
+        }
+        return false;
+    }
 }
