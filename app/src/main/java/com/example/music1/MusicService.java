@@ -97,6 +97,8 @@ public class MusicService extends Service {
     public void play(){
         if(myMediaPlayer != null){
             myMediaPlayer.start();
+            Intent musicStartintent = new Intent(MainActivity.ACTION_MUSIC_START);
+            sendBroadcast(musicStartintent);
         }
     }
 
